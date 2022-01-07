@@ -15,12 +15,13 @@ class BrowserExternalEditor(EditCurrent):
             QKeySequence("Ctrl+Return")
         )
         self.editor = aqt.editor.Editor(self.mw, self.form.fieldsArea, self)
+
         #self.editor.card = self.mw.reviewer.card # Anki source
         #self.editor.set_note(self.mw.reviewer.card.note(), focusTo=0) # Anki source
-        #restoreGeom(self, "editcurrent") # Anki source
         self.editor.card = browser.card # Browser external editor
         self.editor.set_note(self.editor.card.note(), focusTo=0) # Browser external editor
-        restoreGeom(self, "browserexternaleditor") # Browser external editor
+        
+        restoreGeom(self, "editcurrent")
         gui_hooks.operation_did_execute.append(self.on_operation_did_execute)
         self.show()
 
@@ -32,6 +33,7 @@ BEE_SC_EDIT = None
 
 def setup_shortcuts(browser: aqt.browser.Browser):
     config = browser.mw.addonManager.getConfig(__name__)
+    global BEE_SC_EDIT
     BEE_SC_EDIT = config.get(CFG_SC_EDIT)
     if BEE_SC_EDIT:
         sc = QShortcut(QKeySequence(BEE_SC_EDIT), browser)
@@ -39,10 +41,9 @@ def setup_shortcuts(browser: aqt.browser.Browser):
 
 #def setup_menu(browser: aqt.browser.Browser):
 def setup_menu(browser: aqt.browser.Browser, menu: QMenu):
-    label = BEE_MENU
+    action = QAction(BEE_MENU, browser)
     if BEE_SC_EDIT:
-        label = f"{BEE_MENU} ({BEE_SC_EDIT})"
-    action = QAction(label, browser)
+        action.setShortcut(QKeySequence(BEE_SC_EDIT))
     action.triggered.connect(lambda: BrowserExternalEditor(browser.mw, browser))
     menu.addAction(action)
 
