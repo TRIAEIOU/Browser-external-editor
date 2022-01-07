@@ -34,7 +34,6 @@ def setup_shortcuts(browser: aqt.browser.Browser):
     config = browser.mw.addonManager.getConfig(__name__)
     BEE_SC_EDIT = config.get(CFG_SC_EDIT)
     if BEE_SC_EDIT:
-        print(">>>>>>>>>>")
         sc = QShortcut(QKeySequence(BEE_SC_EDIT), browser)
         sc.activated.connect(lambda: BrowserExternalEditor(browser.mw, browser))
 
