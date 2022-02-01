@@ -1,5 +1,9 @@
 from aqt.editcurrent import *
 
+###########################################################################
+# Inherit Anki built-in EditCurrent class and implement relevant changes
+# All changes from EditCurrent marked below
+###########################################################################
 class BrowserExternalEditor(EditCurrent):
     def __init__(self, mw, browser: aqt.browser.Browser) -> None:
         QDialog.__init__(self, None, Qt.WindowType.Window)
@@ -16,13 +20,13 @@ class BrowserExternalEditor(EditCurrent):
         )
         self.editor = aqt.editor.Editor(self.mw, self.form.fieldsArea, self)
 
-        #self.editor.card = self.mw.reviewer.card # Anki source
-        #self.editor.set_note(self.mw.reviewer.card.note(), focusTo=0) # Anki source
-        self.editor.card = browser.card # Browser external editor
-        self.editor.set_note(self.editor.card.note(), focusTo=0) # Browser external editor
+        #self.editor.card = self.mw.reviewer.card # EditCurrent
+        #self.editor.set_note(self.mw.reviewer.card.note(), focusTo=0) # EditCurrent
+        self.editor.card = browser.card # BEE
+        self.editor.set_note(self.editor.card.note(), focusTo=0) # BEE
         
         restoreGeom(self, "editcurrent")
-        gui_hooks.operation_did_execute.append(self.on_operation_did_execute)
+        #gui_hooks.operation_did_execute.append(self.on_operation_did_execute)
         self.show()
 
 
