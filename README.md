@@ -11,3 +11,6 @@ Minimal implementation Anki addon (https://ankiweb.net/shared/info/2065559429) t
 - "Continuous note autosync with DB" is disabled for the external editor windows which means the note is not updated in the editor if it is saved elsewhere while the window open. This is due to Anki implementation of Edit current note/Browser editor which results in the caret position being reset to the beginning of the field on every sync (which occurs every few seconds). It is therefore impractical to _edit_ the same note in several windows simultaneously as:
   - If browser editor is open with the same note that editor will still autosync-and-reset-caret.
   - Having the same note open in separate external windows will lead to the version written to the DB be the one from the window that is closed last.
+
+## Changelog
+- 2022-05-13: Qt6 implement shortcut/menu changes.
