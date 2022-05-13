@@ -1,4 +1,8 @@
+import re
 from aqt.editcurrent import *
+import aqt
+from aqt import gui_hooks
+from aqt.qt import QMenu, QDialog, QAction, restoreGeom, QKeySequence, QShortcut
 
 ###########################################################################
 # Inherit Anki built-in EditCurrent class and implement relevant changes
@@ -16,7 +20,7 @@ class BrowserExternalEditor(EditCurrent):
         self.setMinimumHeight(400)
         self.setMinimumWidth(250)
         self.form.buttonBox.button(QDialogButtonBox.StandardButton.Close).setShortcut(
-            QKeySequence("Ctrl+Return")
+            QKeySequence("Ctrl|Return")
         )
         self.editor = aqt.editor.Editor(self.mw, self.form.fieldsArea, self)
 
@@ -40,7 +44,7 @@ def setup_shortcuts(browser: aqt.browser.Browser):
     global BEE_SC_EDIT
     BEE_SC_EDIT = config.get(CFG_SC_EDIT)
     if BEE_SC_EDIT:
-        sc = QShortcut(QKeySequence(BEE_SC_EDIT), browser)
+        sc = QShortcut(QKeySequence(re.sub(r'(?<!_)+', r'|', BEE_SC_EDIT)), browser)
         sc.activated.connect(lambda: BrowserExternalEditor(browser.mw, browser))
 
 #def setup_menu(browser: aqt.browser.Browser):
