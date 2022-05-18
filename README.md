@@ -14,3 +14,4 @@ Minimal implementation Anki addon (https://ankiweb.net/shared/info/2065559429) t
 
 ## Changelog
 - 2022-05-13: Qt6 implement shortcut/menu changes.
+- 2022-05-18: Bug fix of shortcut/menu changes.
